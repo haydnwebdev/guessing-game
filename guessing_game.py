@@ -8,6 +8,11 @@ import os
 import platform
 from random import randint
 
+# initialise game variables
+high_score = []
+player_attempts = 0
+total_games_played = 0
+
 
 def clear_screen():
     """Detect OS type, perform clear screen."""
@@ -18,17 +23,23 @@ def clear_screen():
         os.system("clear")
 
 
-def game_banner():
-    """Display Game banner at start of game."""
+def game_banner(high_score):
+    """Display Game banner at start of game with current high score."""
     message = "Number Guessing Game"
-    print("-" * len(message))
-    print(message)
-    print("-" * len(message))
+    high_score_message = f"Current High Score: {min(high_score) if high_score else 0}"
+
+    # Calculating lengths for consistent formatting
+    max_length = max(len(message), len(high_score_message))
+
+    print("*" * (max_length + 4))
+    print("* " + message.center(max_length) + " *")
+    print("* " + high_score_message.center(max_length) + " *")
+    print("*" * (max_length + 4))
 
 
 def start_game():
     """Return a randomly generated number between 1 and 10."""
-    return randint(1, 11)
+    return randint(1, 10)
 
 
 def get_player_guess():
@@ -39,7 +50,7 @@ def get_player_guess():
         if user_input.lower() == "quit":
             return "quit"
         # check the integer is valid and within range 1-10
-        try:            
+        try:
             player_guess = int(user_input)
             if player_guess in range(1, 11):
                 return player_guess
@@ -61,11 +72,6 @@ def player_stats(high_score, total_games_played):
     print("-" * 35)
 
 
-# initialise game variables
-high_score = []
-player_attempts = 0
-total_games_played = 0
-
 # generate random number
 number = start_game()
 
@@ -73,7 +79,7 @@ number = start_game()
 clear_screen()
 
 # display banner
-game_banner()
+game_banner(high_score)
 
 # start game loop
 while True:
@@ -97,9 +103,10 @@ while True:
         print("You guessed the number right!")
         total_games_played += 1  # Increment games played
         high_score.append(player_attempts)  # Add total attempts to high score list
+        player_stats(high_score, total_games_played)  # Display player stats
 
         # Check if the player wants to continue
-        if input("Play again? y/n: ").lower() == 'y':
+        if input("Play again? y/n: ").lower() == "y":
             number = start_game()  # Generate new number
             player_attempts = 0  # Reset player attempts
         else:
