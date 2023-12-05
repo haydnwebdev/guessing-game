@@ -24,7 +24,11 @@ def clear_screen():
 
 
 def game_banner(high_score):
-    """Display Game banner at start of game with current high score."""
+    """Display Game banner at start of game with current high score.
+
+    Args:
+        high_score (list) - high_score (list) - the highest score achieved by the player.
+    """
     message = "Number Guessing Game"
     high_score_message = f"Current High Score: {min(high_score) if high_score else 0}"
 
@@ -38,12 +42,20 @@ def game_banner(high_score):
 
 
 def start_game():
-    """Return a randomly generated number between 1 and 10."""
+    """Return a randomly generated number between 1 and 10.
+
+    Returns:
+        a random integer between 1 and 10
+    """
     return randint(1, 10)
 
 
 def get_player_guess():
-    """Returns a valid integer or a quit signal."""
+    """Returns a valid integer or a quit signal.
+
+    Returns:
+        player_guess (int) - a valid number between 1 - 10.
+    """
     while True:
         user_input = input("Choose a number between 1 and 10 or type 'quit' to exit: ")
         # user wants to quit the game
@@ -61,15 +73,22 @@ def get_player_guess():
 
 
 def player_stats(high_score, total_games_played):
-    """Display player stats at end of game."""
-    print("-" * 35)
+    """Display player stats at end of game.
+
+    Args:
+        high_score (list) - the highest score achieved by the player.
+        total_games_played (int) - the total number of games played.
+    """
+    print("-" * 40)
     print("Player Statistics")
-    print("-" * 35)
-    print(f"High Score: {min(high_score)}")
-    print(f"Total Games Played: {total_games_played}")
-    print(f"Previous Attempts: {', '.join(map(str, high_score))}")
-    print(f"Average Attempt: {sum(high_score) / len(high_score):.0f}")
-    print("-" * 35)
+    print("-" * 40)
+    print(f"Total Games Played : {total_games_played}")
+    print(f"Your Previous Attempts : {', '.join(map(str, high_score))}")
+    print(f"Your Average Attempts Score: {sum(high_score) / len(high_score):.0f}")
+    print("-" * 40)
+    print(f"Current High Score to Beat : {min(high_score)}")
+    print(f"Your Previous Attempt Was : {high_score[-1]}")
+    print("-" * 40)
 
 
 # generate random number
